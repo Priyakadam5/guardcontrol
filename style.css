@@ -74,16 +74,29 @@ h2 {
 }
 
 .nav-container {
-    height: 75px;
+    height: 85px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
 .logo img {
     height: 50px;
     width: auto;
     display: block;
+}
+
+.logo span {
+    font-size: 14px;
+    color: #999;
+    letter-spacing: 1px;
+    white-space: nowrap;
 }
 
 nav {
