@@ -411,4 +411,19 @@ footer {
         flex-wrap: wrap;
     }
 }
+.contact-info a {
+    color: #19bfff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    color: #ffffff;
+}
+
+.contact-info h3 {
+    color: #19bfff;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
 ```
