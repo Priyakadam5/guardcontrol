@@ -432,5 +432,7 @@ footer {
 /*BUILT FOR THE FIGHT*/
 .hero-title {
     font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 ```
