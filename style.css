@@ -90,6 +90,7 @@ h2 {
 .logo img {
     height: 50px;
     width: auto;
+    object-fit: contain;
     display: block;
 }
 
@@ -130,12 +131,15 @@ nav {
 
 nav a {
     font-size: 14px;
-    color: #cccccc;
+    font-weight: 800;
+    color: #19bfff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: 0.2s;
 }
 
 nav a:hover {
-    color: #19bfff;
+    color: #ffffff;
 }
 
 
