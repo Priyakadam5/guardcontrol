@@ -93,9 +93,11 @@ h2 {
 }
 
 .logo span {
-    font-size: 14px;
-    color: #999;
-    letter-spacing: 1px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #00e5ff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     white-space: nowrap;
 }
 
