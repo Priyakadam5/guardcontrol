@@ -411,6 +411,9 @@ footer {
         flex-wrap: wrap;
     }
 }
+
+/* CONTACT INFO */
+
 .contact-info a {
     color: #19bfff;
     font-weight: 700;
