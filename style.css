@@ -73,11 +73,33 @@ h2 {
     z-index: 1000;
 }
 
+/* Guard Control brand header */
 .nav-container {
-    height: 85px;
+    min-height: 85px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 30px;
+}
+
+.logo {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+    display: block;
+}
+
+.brand-tagline {
+    text-align: center;
+    color: #00e5ff;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    white-space: nowrap;
 }
 
 .logo {
