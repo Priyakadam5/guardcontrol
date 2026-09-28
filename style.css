@@ -238,9 +238,21 @@ nav a:hover {
 ========================= */
 
 .products {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 15px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+}
+
+.product-card {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    background: #111111;
+    border: 1px solid #222;
+    transition: 0.3s;
 }
 
 .product-card {
@@ -255,7 +267,7 @@ nav a:hover {
 }
 
 .product-image {
-    height: 420px;
+    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
