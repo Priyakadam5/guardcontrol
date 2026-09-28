@@ -288,7 +288,7 @@ nav a:hover {
 }
 
 .product-info {
-    padding: 25px;
+    padding: 24px;
 }
 
 .product-info h3 {
@@ -410,10 +410,6 @@ footer {
 
     .hero h1 {
         letter-spacing: -2px;
-    }
-
-    .products {
-        grid-template-columns: 1fr;
     }
 
     .product-image {
