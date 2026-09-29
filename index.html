@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- Google Analytics -->
@@ -73,52 +73,84 @@
 
 
         <!-- Shop -->
-        <section id="shop" class="section">
-            <div class="container">
+<section id="shop" class="section">
 
-                <div class="section-heading">
-                    <p class="eyebrow">UPCOMING APPAREL</p>
-                    <h2>MMA &amp; GRAPPLING SCHOOL</h2>
-                    <p>
-                        Performance apparel built for MMA, BJJ and grappling.
-                    </p>
+    <div class="container">
+
+        <div class="section-heading">
+            <p class="eyebrow">SHOP GUARD CONTROL</p>
+            <h2>UPCOMING APPAREL</h2>
+            <p>Performance apparel built for MMA, BJJ and grappling.</p>
+        </div>
+
+        <!-- PRODUCT FILTERS -->
+        <div class="shop-filters">
+            <button class="filter-btn active" data-filter="all">ALL</button>
+            <button class="filter-btn" data-filter="rashguard">RASH GUARDS</button>
+            <button class="filter-btn" data-filter="shorts">FIGHT SHORTS</button>
+            <button class="filter-btn" data-filter="bjj">BJJ</button>
+            <button class="filter-btn" data-filter="mma">MMA</button>
+            <button class="filter-btn" data-filter="custom">CUSTOM TEAM GEAR</button>
+        </div>
+
+        <!-- PRODUCTS -->
+        <div class="products">
+
+            <!-- RASH GUARD -->
+            <div class="product-card" data-category="rashguard bjj mma">
+
+                <div class="product-image">
+                    <img src="assets/apparel/MmaAndGrapplingSchool/MmaAndGrapplingSchoolRashguard.jpg"
+                         alt="MMA and Grappling School Rash Guard">
                 </div>
 
-                <div class="products">
-
-                    <!-- Rashguard -->
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="assets/apparel/MmaAndGrapplingSchool/MmaAndGrapplingSchoolShorts.jpg"
-                                alt="MMA and Grappling School Fight Shorts">
-                        </div>
-
-                        <div class="product-info">
-                            <h3>FIGHT SHORTS</h3>
-                            <p>Fully sublimated performance gear designed for combat sports.</p>
-                            <span class="text-link">COMING SOON</span>
-                        </div>
-                    </div>
-
-                    <!-- Shorts -->
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="assets/apparel/MmaAndGrapplingSchool/MmaAndGrapplingSchoolRashguard.jpg"
-                                alt="MMA and Grappling School Rash Guard">
-                        </div>
-
-                        <div class="product-info">
-                            <h3>RASH GUARD</h3>
-                            <p>Performance shorts designed for combat sports.</p>
-                            <span class="text-link">COMING SOON</span>
-                        </div>
-                    </div>
-
+                <div class="product-info">
+                    <p class="product-category">RASH GUARD • BJJ • MMA</p>
+                    <h3>MMA & Grappling School Rash Guard</h3>
+                    <p>Fully sublimated performance rash guard designed for MMA, BJJ and grappling.</p>
+                    <span class="product-status">COMING SOON</span>
                 </div>
 
             </div>
-        </section>
 
+            <!-- FIGHT SHORTS -->
+            <div class="product-card" data-category="shorts bjj mma">
+
+                <div class="product-image">
+                    <img src="assets/apparel/MmaAndGrapplingSchool/MmaAndGrapplingSchoolShorts.jpg"
+                         alt="MMA and Grappling School Fight Shorts">
+                </div>
+
+                <div class="product-info">
+                    <p class="product-category">FIGHT SHORTS • BJJ • MMA</p>
+                    <h3>MMA & Grappling School Fight Shorts</h3>
+                    <p>Fully sublimated performance shorts designed for combat sports.</p>
+                    <span class="product-status">COMING SOON</span>
+                </div>
+
+            </div>
+
+            <!-- CUSTOM TEAM GEAR -->
+            <div class="product-card custom-card" data-category="custom bjj mma">
+
+                <div class="product-image custom-placeholder">
+                    <span>CUSTOM<br>TEAM GEAR</span>
+                </div>
+
+                <div class="product-info">
+                    <p class="product-category">CUSTOM • TEAM GEAR</p>
+                    <h3>Custom Combat Sports Gear</h3>
+                    <p>Customised rash guards and fight shorts for MMA, BJJ and grappling teams.</p>
+                    <span class="product-status">ENQUIRE NOW</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 <!-- About -->
 <section id="about" class="section">
     <div class="container">
@@ -173,7 +205,43 @@
 </section>
 
 </main>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const products = document.querySelectorAll(".product-card");
+
+    filterButtons.forEach(button => {
+
+        button.addEventListener("click", function () {
+
+            const filter = this.getAttribute("data-filter");
+
+            filterButtons.forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+            this.classList.add("active");
+
+            products.forEach(product => {
+
+                const categories = product.getAttribute("data-category");
+
+                if (filter === "all" || categories.includes(filter)) {
+                    product.style.display = "block";
+                } else {
+                    product.style.display = "none";
+                }
+
+            });
+
+        });
+
+    });
+
+});
+</script>
+  
 </body>
 </html>
 ```
