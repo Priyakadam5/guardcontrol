@@ -162,19 +162,23 @@ nav a:hover {
 }
 
 .hero-content {
-    padding-top: 75px;
+    padding-top: 85px;
+    padding-bottom: 60px;
 }
 
 .hero h1 {
-    font-size: clamp(55px, 10vw, 120px);
+    font-size: clamp(48px, 7vw, 82px);
     font-weight: 900;
-    letter-spacing: -3px;
+    line-height: 0.95;
+    letter-spacing: -2px;
     margin-bottom: 25px;
+    max-width: 700px;
 }
 
 .hero-text {
-    max-width: 500px;
-    font-size: 19px;
+    max-width: 560px;
+    font-size: 18px;
+    line-height: 1.7;
     color: #bdbdbd;
     margin-bottom: 35px;
 }
@@ -409,9 +413,11 @@ footer {
         padding: 70px 0;
     }
 
-    .hero h1 {
-        letter-spacing: -2px;
-    }
+   .hero h1 {
+       font-size: clamp(42px, 13vw, 62px);
+       line-height: 0.95;
+       letter-spacing: -1.5px;
+   }
 
     .product-image {
         height: 280px;
