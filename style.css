@@ -602,20 +602,24 @@ h3 { font-size: 26px; }
     .hero-overlay {
         inset: auto;
         margin-bottom: -100vh; margin-bottom: -100svh;
-        background: linear-gradient(180deg, rgba(7,9,12,.5) 0%, rgba(7,9,12,0) 30%, rgba(7,9,12,.92) 100%);
+        background: linear-gradient(180deg, rgba(7,9,12,.5) 0%, rgba(7,9,12,0) 18%, rgba(7,9,12,0) 52%, rgba(7,9,12,.82) 66%, rgba(7,9,12,.96) 100%);
     }
     .hero-content {
         min-height: 100vh; min-height: 100svh;
         display: flex; flex-direction: column; justify-content: flex-end;
         padding-top: calc(var(--nav-h) + 24px);
-        padding-bottom: 64px;
+        padding-bottom: 40px;
     }
+    /* keep our copy in the lower third, clear of the captions burned into the video (~middle of the frame) */
+    .hero-title { font-size: 54px; margin-bottom: 18px; }
+    .hero-text { display: none; }
+    .hero-buttons { flex-wrap: nowrap; gap: 10px; }
+    .hero-buttons .button { flex: 1 1 0; padding-left: 10px; padding-right: 10px; font-size: 15px; }
     .hero .story { background: transparent; position: relative; z-index: 3; }
-    .hero-buttons .button { flex: 1 1 100%; }
-    .hero-text { margin-bottom: 26px; }
     .stage-count { display: none; }
     /* the hero film is the backdrop; chapters roll over it */
     .stage-frame { background: transparent; }
+    .stage-art { display: none; }
 
     /* story: full-screen image pinned behind, text rolls over it */
     .story-grid, .story-grid.container { grid-template-columns: 1fr; gap: 0; width: 100%; margin: 0; }
@@ -628,7 +632,7 @@ h3 { font-size: 26px; }
     .story-stage::after {
         content: "";
         position: absolute; inset: 0;
-        background: linear-gradient(180deg, rgba(7,9,12,.55) 0%, rgba(7,9,12,0) 22%, rgba(7,9,12,0) 38%, rgba(7,9,12,.92) 78%, #07090c 100%);
+        background: linear-gradient(180deg, rgba(7,9,12,.5) 0%, rgba(7,9,12,0) 18%, rgba(7,9,12,0) 52%, rgba(7,9,12,.82) 66%, rgba(7,9,12,.96) 100%);
         pointer-events: none;
     }
     .stage-frame {
@@ -646,10 +650,10 @@ h3 { font-size: 26px; }
     .step {
         min-height: 100vh; min-height: 100svh;
         justify-content: flex-end;
-        padding: 0 0 clamp(56px, 11svh, 110px);
+        padding: 0 0 clamp(32px, 5svh, 48px);
     }
-    .step p:not(.eyebrow) { font-size: 16px; color: #cdd6e0; }
-    .step h2 { font-size: 46px; margin-bottom: 14px; }
+    .step p:not(.eyebrow) { font-size: 15px; line-height: 1.5; color: #d6dee8; }
+    .step h2 { font-size: 38px; margin-bottom: 10px; }
 
     .scroll-cue { display: none; }
 }
