@@ -32,8 +32,6 @@
             video.loop = true;
             video.src = video.dataset[key];
             video.load();
-            // mobile film plays a touch slower (0.55x); load() resets the rate, so set it again
-            video.defaultPlaybackRate = video.playbackRate = key === "scrub" ? 0.55 : 1;
             var p = video.play();
             if (p && p.catch) p.catch(function () { /* autoplay blocked: poster stays */ });
         };

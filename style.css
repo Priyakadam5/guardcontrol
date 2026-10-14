@@ -578,10 +578,12 @@ h3 { font-size: 26px; }
     .site-nav.open { opacity: 1; visibility: visible; }
     .site-nav > a {
         font-family: var(--font-head);
-        font-size: 38px; font-weight: 800; letter-spacing: 1px;
-        padding: 6px 0; border-bottom: 1px solid var(--line);
+        font-size: 26px; font-weight: 800; letter-spacing: 1px;
+        padding: 10px 0; border-bottom: 1px solid var(--line);
     }
-    .site-nav .button-small { margin-top: 24px; min-height: 54px; font-size: 20px; }
+    .site-nav .button-small { margin-top: 24px; min-height: 50px; font-size: 17px; }
+    /* backdrop-filter would trap the fixed full-screen menu inside the bar */
+    .navbar.scrolled { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(7,9,12,.94); }
 
     .scroll-cue { display: none; }
 
