@@ -128,14 +128,19 @@
             var sec = $("#story");
             var span = sec.offsetHeight - window.innerHeight;
             var p = span > 0 ? Math.min(Math.max(-sec.getBoundingClientRect().top / span, 0), 0.9999) : 0;
-            setStep(Math.floor(p * steps.length) + 1);
+            var idx = Math.floor(p * (steps.length + 1)); // 0 = hero intro, 1..n = chapters
+            var hc = $(".hero-content");
+            if (hc) hc.classList.toggle("is-away", idx > 0);
+            setStep(idx);
         };
         window.addEventListener("scroll", onStoryProgress, { passive: true });
         window.addEventListener("resize", onStoryProgress);
 
         var buildStoryObserver = function () {
             if (so) so.disconnect();
+            var hc0 = $(".hero-content");
             if (storyMq.matches) { onStoryProgress(); return; }
+            if (hc0) hc0.classList.remove("is-away");
             var margin = "-49% 0px -49% 0px";
             so = new IntersectionObserver(function (entries) {
                 entries.forEach(function (e) {
