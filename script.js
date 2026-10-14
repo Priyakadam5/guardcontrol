@@ -219,6 +219,20 @@
         onFilmScroll();
     }
 
+    /* ---------- Mobile: collection pins at its bottom so Custom slides over it ---------- */
+    var shopSec = $("#shop");
+    if (shopSec) {
+        var pinMq = window.matchMedia("(max-width: 820px)");
+        var pinShop = function () {
+            shopSec.style.top = pinMq.matches
+                ? Math.min(0, window.innerHeight - shopSec.offsetHeight) + "px" : "";
+        };
+        pinShop();
+        window.addEventListener("resize", pinShop);
+        window.addEventListener("load", pinShop);
+        if (window.ResizeObserver) new ResizeObserver(pinShop).observe(shopSec);
+    }
+
     /* ---------- Customise modal ---------- */
     var modal = $("#customModal");
     var form = $("#customForm");
