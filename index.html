@@ -1,247 +1,379 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3H18JW1KY8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Guard Control | Custom Rash Guards &amp; Fight Shorts</title>
+    <meta name="description" content="Custom rash guards and fight shorts for MMA, BJJ and grappling. Bring your design, we bring it to life. Control the roll.">
+    <meta name="theme-color" content="#07090c">
 
-  gtag('config', 'G-3H18JW1KY8');
-</script>
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
 
-    <title>Guard Control | Combat Sports Gear</title>
-    <meta name="description" content="Performance gear for MMA, BJJ and grappling.">
+    <!-- Social preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Guard Control | Custom Rash Guards &amp; Fight Shorts">
+    <meta property="og:description" content="Bring your design, we bring it to life. Premium rash guards and fight shorts for MMA, BJJ and grappling.">
+    <meta property="og:url" content="https://guardcontrol.co.in/">
+    <meta property="og:image" content="https://guardcontrol.co.in/assets/video/hero-desktop-poster.jpg">
+    <meta name="twitter:card" content="summary_large_image">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3H18JW1KY8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-3H18JW1KY8');
+    </script>
 </head>
 
 <body>
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 
     <!-- Navigation -->
-    <header class="navbar">
-    <div class="container nav-container">
-    
-        <a href="#" class="logo">
-            <img src="assets/guardcontrol-logo.png" alt="Guard Control">
-        </a>
-    
-        <div class="brand-tagline">CONTROL THE ROLL.</div>
-    
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#shop">Shop</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    
-    </div>
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#home" class="logo" aria-label="Guard Control home">
+                <img src="assets/icons/icon-192.png" alt="" width="44" height="44">
+                <span>GUARD<b>CONTROL</b></span>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav id="siteNav" class="site-nav">
+                <a href="#story">Story</a>
+                <a href="#shop">Shop</a>
+                <a href="#custom">Custom</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <button type="button" class="button button-small" data-open-custom>Customise</button>
+            </nav>
+        </div>
     </header>
 
-
-    <!-- Hero -->
     <main>
 
+        <!-- ============ HERO ============ -->
         <section id="home" class="hero">
+            <video class="hero-video" id="heroVideo" muted loop playsinline autoplay preload="auto"
+                   poster="assets/video/hero-desktop-poster.jpg"
+                   data-desktop="assets/video/hero-desktop.mp4"
+                   data-mobile="assets/video/hero-mobile.mp4"
+                   data-poster-desktop="assets/video/hero-desktop-poster.jpg"
+                   data-poster-mobile="assets/video/hero-mobile-poster.jpg"
+                   aria-hidden="true"></video>
+            <div class="hero-overlay"></div>
+
             <div class="container hero-content">
-
-                <p class="eyebrow">MMA • BJJ • GRAPPLING</p>
-
-                <h1 class="hero-title">COMBAT SPORTS<br>GEAR</h1>
-
+                <p class="eyebrow">MMA &bull; BJJ &bull; GRAPPLING</p>
+                <h1 class="hero-title">CONTROL<br>THE ROLL.</h1>
                 <p class="hero-text">
-                Built for MMA, BJJ and grappling.<br>
-                Gear designed for hard training, intense rounds and competition.<br>
-                Made for movement, comfort and durability.<br><br>
-                Train hard. Roll hard. Stay ready.<br>
-                <strong>CONTROL THE ROLL.</strong>
+                    Premium rash guards and fight shorts, sublimated edge to edge.
+                    Bring your design &mdash; we bring it to life.
                 </p>
-
                 <div class="hero-buttons">
-                    <a href="#shop" class="button button-primary">
-                        SHOP NOW
-                    </a>
+                    <a href="#shop" class="button button-primary">Explore Gear</a>
+                    <button type="button" class="button button-ghost" data-open-custom>Customise it for me</button>
+                </div>
+            </div>
 
-                    <a href="#about" class="button button-secondary">
-                        LEARN MORE
-                    </a>
+            <a href="#story" class="scroll-cue" aria-label="Scroll to story">
+                <span>SCROLL</span><i></i>
+            </a>
+        </section>
+
+
+        <!-- ============ FILM (scroll-scrubbed video) ============ -->
+        <section id="film" class="film" aria-label="Guard Control film">
+            <div class="film-pin">
+                <video id="filmVideo" muted playsinline preload="auto" aria-hidden="true"
+                       poster="assets/video/film-desktop-poster.jpg"
+                       data-desktop="assets/video/film-desktop.mp4"
+                       data-mobile="assets/video/film-mobile.mp4"
+                       data-poster-desktop="assets/video/film-desktop-poster.jpg"
+                       data-poster-mobile="assets/video/film-mobile-poster.jpg"></video>
+                <div class="film-bar"><span id="filmBar"></span></div>
+            </div>
+        </section>
+
+
+        <!-- ============ STORY (scroll-driven) ============ -->
+        <section id="story" class="story">
+            <div class="container story-grid">
+
+                <div class="story-stage">
+                    <div class="stage-frame">
+                        <div class="stage-art" id="stageArt" data-step="1" role="img"
+                             aria-label="Front and back of a custom sublimated rash guard"></div>
+                        <div class="stage-count"><span id="stageNum">01</span> / 03</div>
+                    </div>
+                </div>
+
+                <div class="story-steps">
+                    <article class="step is-active" data-step="1">
+                        <p class="eyebrow">CHAPTER 01</p>
+                        <h2>YOU BRING<br>THE DESIGN.</h2>
+                        <p>A skull, a mandala, your gym's crest, your team colours &mdash; if you can picture it, we can print it. Send us the artwork and tell us how you roll.</p>
+                    </article>
+
+                    <article class="step" data-step="2">
+                        <p class="eyebrow">CHAPTER 02</p>
+                        <h2>WE BRING<br>IT TO LIFE.</h2>
+                        <p>Every panel is fully sublimated so the artwork becomes part of the fabric &mdash; sharp, vivid and built not to crack or peel. Your logo, front, back and sleeves.</p>
+                    </article>
+
+                    <article class="step" data-step="3">
+                        <p class="eyebrow">CHAPTER 03</p>
+                        <h2>BUILT FOR<br>THE GRIND.</h2>
+                        <p>Made for movement, comfort and durability &mdash; hard training, long rounds and competition day. Wear your identity into every roll.</p>
+                        <a href="#shop" class="text-link">See the collection &rarr;</a>
+                    </article>
                 </div>
 
             </div>
         </section>
 
 
-        <!-- Shop -->
-<section id="shop" class="section">
+        <!-- ============ SHOP ============ -->
+        <section id="shop" class="section shop">
+            <div class="container">
 
-    <div class="container">
-
-        <div class="section-heading">
-            <p class="eyebrow">SHOP GUARD CONTROL</p>
-            <h2>UPCOMING APPAREL</h2>
-            <p>Performance apparel built for MMA, BJJ and grappling.</p>
-        </div>
-
-        <!-- PRODUCT FILTERS -->
-        <div class="shop-filters">
-            <button class="filter-btn active" data-filter="all">ALL</button>
-            <button class="filter-btn" data-filter="rashguard">RASH GUARDS</button>
-            <button class="filter-btn" data-filter="shorts">FIGHT SHORTS</button>
-            <button class="filter-btn" data-filter="bjj">BJJ</button>
-            <button class="filter-btn" data-filter="mma">MMA</button>
-            <button class="filter-btn" data-filter="custom">CUSTOM TEAM GEAR</button>
-        </div>
-
-        <!-- PRODUCTS -->
-        <div class="products">
-
-            <!-- RASH GUARD -->
-            <div class="product-card" data-category="rashguard bjj mma custom">
-
-                <div class="product-image">
-                    <img src="assets/apparel/MmaAndGrapplingSchool/MmaAndGrapplingSchoolRashguard.jpg"
-                         alt="MMA and Grappling School RashGuard">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">SHOP GUARD CONTROL</p>
+                    <h2>THE COLLECTION</h2>
+                    <p>Performance apparel for MMA, BJJ and grappling. Tap <strong>Shop Now</strong> to DM the founders on Instagram.</p>
                 </div>
 
-                <div class="product-info">
-                    <p class="product-category">RASH GUARD • BJJ • MMA</p>
-                    <h3>MMA & Grappling School Rash Guard</h3>
-                    <p>Fully sublimated performance rash guard designed for MMA, BJJ and grappling.</p>
-                    <span class="product-status">COMING SOON</span>
+                <div class="products">
+
+                    <article class="product-card reveal">
+                        <div class="product-image">
+                            <img src="assets/apparel/MmaAndGrapplingSchool/MmaAndGrapplingSchoolRashguard.jpg"
+                                 alt="MMA and Grappling School sublimated rash guard, front and back"
+                                 loading="lazy" width="1170" height="706">
+                            <span class="badge">COMING SOON</span>
+                        </div>
+                        <div class="product-info">
+                            <p class="product-category">RASH GUARD &bull; BJJ &bull; MMA</p>
+                            <h3>MMA &amp; Grappling School Rash Guard</h3>
+                            <p>Fully sublimated performance rash guard designed for MMA, BJJ and grappling.</p>
+                            <a class="button button-primary" href="https://ig.me/m/guardcontrol" target="_blank" rel="noopener">Shop Now</a>
+                        </div>
+                    </article>
+
+                    <article class="product-card reveal">
+                        <div class="product-image">
+                            <img src="assets/apparel/MmaAndGrapplingSchool/MmaAndGrapplingSchoolShort.jpg"
+                                 alt="MMA and Grappling School mandala fight shorts, multiple angles"
+                                 loading="lazy" width="1170" height="977">
+                            <span class="badge">COMING SOON</span>
+                        </div>
+                        <div class="product-info">
+                            <p class="product-category">FIGHT SHORTS &bull; BJJ &bull; MMA</p>
+                            <h3>MMA &amp; Grappling School Fight Shorts</h3>
+                            <p>Fully sublimated performance shorts designed for combat sports.</p>
+                            <a class="button button-primary" href="https://ig.me/m/guardcontrol" target="_blank" rel="noopener">Shop Now</a>
+                        </div>
+                    </article>
+
+                    <article class="product-card product-custom reveal">
+                        <div class="product-image custom-art">
+                            <div>
+                                <span>YOUR</span>
+                                <strong>DESIGN</strong>
+                                <span>HERE</span>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <p class="product-category">CUSTOM &bull; TEAM GEAR</p>
+                            <h3>Custom Combat Sports Gear</h3>
+                            <p>Customised rash guards and fight shorts for gyms, teams and fighters.</p>
+                            <button type="button" class="button button-outline" data-open-custom>Customise it for me</button>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============ CUSTOM ============ -->
+        <section id="custom" class="section custom">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">CUSTOM TEAM GEAR</p>
+                    <h2>YOUR DESIGN.<br>OUR CRAFT.</h2>
+                    <p>Three steps from idea to the mat. A minimum order quantity (MOQ) applies to customised orders.</p>
                 </div>
 
+                <ol class="steps-row">
+                    <li class="reveal">
+                        <span class="num">1</span>
+                        <h3>Share your design</h3>
+                        <p>Upload your artwork or reference image with your contact details.</p>
+                    </li>
+                    <li class="reveal">
+                        <span class="num">2</span>
+                        <h3>We talk it through</h3>
+                        <p>The founders reach out to confirm sizes, colours, quantity and pricing.</p>
+                    </li>
+                    <li class="reveal">
+                        <span class="num">3</span>
+                        <h3>We make it real</h3>
+                        <p>Your rash guards and shorts are sublimated, finished and delivered.</p>
+                    </li>
+                </ol>
+
+                <div class="center reveal">
+                    <button type="button" class="button button-primary" data-open-custom>Customise it for me</button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============ ABOUT ============ -->
+        <section id="about" class="section about">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">ABOUT GUARD CONTROL</p>
+                    <h2>BUILT FOR THE GRIND</h2>
+                </div>
+
+                <ul class="features">
+                    <li class="reveal"><h3>Made for the mat</h3><p>Performance gear for MMA, BJJ and grappling.</p></li>
+                    <li class="reveal"><h3>Made for you</h3><p>Customised gear for your gym or team, with a certain MOQ.</p></li>
+                    <li class="reveal"><h3>Made to last</h3><p>Built for training, hard rounds and competition.</p></li>
+                </ul>
+            </div>
+        </section>
+
+
+        <!-- ============ CONTACT ============ -->
+        <section id="contact" class="section contact">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">GET IN TOUCH</p>
+                    <h2>LET&rsquo;S TALK GEAR</h2>
+                </div>
+
+                <div class="contact-info reveal">
+                    <div>
+                        <h3>WHATSAPP</h3>
+                        <p>
+                            <a href="https://wa.me/918073108199">8073108199</a><br>
+                            <a href="https://wa.me/919901830272">9901830272</a>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3>INSTAGRAM</h3>
+                        <p>
+                            <a href="https://www.instagram.com/guardcontrol/" target="_blank" rel="noopener">@guardcontrol</a><br>
+                            <a href="https://www.instagram.com/mma_and_grappling_school/" target="_blank" rel="noopener">@mma_and_grappling_school</a><br>
+                            <a href="https://www.instagram.com/priyadindoretrains/" target="_blank" rel="noopener">@priyadindoretrains</a>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3>EMAIL</h3>
+                        <p><a href="mailto:Supportguardcontrol@gmail.com">Supportguardcontrol@gmail.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <span class="footer-brand">GUARD<b>CONTROL</b></span>
+            <span>CONTROL THE ROLL.</span>
+            <span>&copy; <span id="year">2026</span> Guard Control</span>
+        </div>
+    </footer>
+
+
+    <!-- ============ CUSTOMISE MODAL ============ -->
+    <div class="modal" id="customModal" role="dialog" aria-modal="true" aria-labelledby="customTitle" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+
+        <div class="modal-panel">
+            <button type="button" class="modal-close" data-close-modal aria-label="Close">&times;</button>
+
+            <div id="formView">
+                <p class="eyebrow">CUSTOMISE IT FOR ME</p>
+                <h2 id="customTitle">SEND US YOUR DESIGN</h2>
+                <p class="modal-sub">Share your details and design. The founders will get back to you.</p>
+
+                <form id="customForm" novalidate>
+                    <!-- honeypot -->
+                    <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+
+                    <label class="field">
+                        <span>Mobile number <em>*</em></span>
+                        <input type="tel" name="mobile" id="mobile" inputmode="tel" autocomplete="tel"
+                               placeholder="e.g. 98765 43210" required>
+                        <small class="err" data-err="mobile"></small>
+                    </label>
+
+                    <label class="field">
+                        <span>Email ID <em>*</em></span>
+                        <input type="email" name="email" id="email" inputmode="email" autocomplete="email"
+                               placeholder="you@example.com" required>
+                        <small class="err" data-err="email"></small>
+                    </label>
+
+                    <div class="field">
+                        <span>Design image <em>*</em> <i>(JPG, PNG or WEBP &middot; max 5 MB)</i></span>
+                        <label class="dropzone" id="dropzone" for="design">
+                            <input type="file" name="attachment" id="design" accept="image/jpeg,image/png,image/webp" required>
+                            <div class="dz-empty" id="dzEmpty">
+                                <strong>Tap to choose an image</strong>
+                                <small>or drag &amp; drop here</small>
+                            </div>
+                            <div class="dz-preview" id="dzPreview" hidden>
+                                <img id="dzImg" alt="Selected design preview">
+                                <small id="dzName"></small>
+                            </div>
+                        </label>
+                        <small class="err" data-err="design"></small>
+                    </div>
+
+                    <label class="field">
+                        <span>Anything else? <i>(optional)</i></span>
+                        <textarea name="notes" id="notes" rows="3" maxlength="600"
+                                  placeholder="Rash guard or shorts, quantity, team name, colours&hellip;"></textarea>
+                    </label>
+
+                    <p class="form-error" id="formError" role="alert" hidden></p>
+
+                    <button type="submit" class="button button-primary button-block" id="submitBtn">
+                        <span class="lbl">Submit design</span>
+                        <span class="spin" aria-hidden="true"></span>
+                    </button>
+                </form>
             </div>
 
-            <!-- FIGHT SHORTS -->
-            <div class="product-card" data-category="shorts bjj mma custom">
-
-                <div class="product-image">
-                    <img src="assets/apparel/MmaAndGrapplingSchool/MmaAndGrapplingSchoolShorts.jpg"
-                         alt="MMA and Grappling School Fight Shorts">
-                </div>
-
-                <div class="product-info">
-                    <p class="product-category">FIGHT SHORTS • BJJ • MMA</p>
-                    <h3>MMA & Grappling School Fight Shorts</h3>
-                    <p>Fully sublimated performance shorts designed for combat sports.</p>
-                    <span class="product-status">COMING SOON</span>
-                </div>
-
+            <div id="doneView" class="done" hidden>
+                <div class="tick" aria-hidden="true">&#10003;</div>
+                <h2>DESIGN RECEIVED</h2>
+                <p>Thank you! We&rsquo;ll reach out on your mobile or email shortly.</p>
+                <button type="button" class="button button-outline" data-close-modal>Close</button>
             </div>
-
-            <!-- CUSTOM TEAM GEAR -->
-            <div class="product-card custom-card" data-category="custom bjj mma">
-
-                <div class="product-image custom-placeholder">
-                    <span>CUSTOM<br>TEAM GEAR</span>
-                </div>
-
-                <div class="product-info">
-                    <p class="product-category">CUSTOM • TEAM GEAR</p>
-                    <h3>Custom Combat Sports Gear</h3>
-                    <p>Customised rash guards and fight shorts for MMA, BJJ and grappling teams.</p>
-                    <span class="product-status">ENQUIRE NOW</span>
-                </div>
-
-            </div>
-
         </div>
-
     </div>
 
-</section>
-<!-- About -->
-<section id="about" class="section">
-    <div class="container">
-        <div class="section-heading">
-            <p class="eyebrow">ABOUT GUARD CONTROL</p>
-            <h2>BUILT FOR THE GRIND</h2>
-            <p>
-                <li> Performance gear for MMA, BJJ and grappling.</li>
-                <li> CUSTOMISED Performance gear for MMA, BJJ and grappling with a certain MOQ.</li>
-                <li> Built for training, hard rounds and competition.</li>
-            </p>
-        </div>
-    </div>
-</section>
-
-<!-- Contact -->
-<section id="contact" class="section">
-    <div class="container">
-        <div class="section-heading">
-            <p class="eyebrow">GET IN TOUCH</p>
-        </div>
-
-        <div class="contact-info">
-
-            <div>
-                <h3>WHATSAPP</h3>
-                <p>
-                    <a href="https://wa.me/918073108199">8073108199</a><br>
-                    <p>9901830272</p>
-                </p>
-            </div>
-
-            <div>
-                <h3>INSTAGRAM</h3>
-                <p>
-                    <a href="https://www.instagram.com/mma_and_grappling_school/">
-                        @mma_and_grappling_school
-                    </a><br>
-
-                    <a href="https://www.instagram.com/guardcontrol/">
-                        @guardcontrol
-                    </a><br>
-
-                    <a href="https://www.instagram.com/priyadindoretrains/">
-                        @priyadindoretrains
-                    </a>
-                </p>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-</main>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const filterButtons = document.querySelectorAll(".filter-btn");
-    const products = document.querySelectorAll(".product-card");
-
-    filterButtons.forEach(button => {
-
-        button.addEventListener("click", function () {
-
-            const filter = this.getAttribute("data-filter");
-
-            filterButtons.forEach(btn => {
-                btn.classList.remove("active");
-            });
-
-            this.classList.add("active");
-
-            products.forEach(product => {
-
-                const categories = product.getAttribute("data-category");
-
-                if (filter === "all" || categories.includes(filter)) {
-                    product.style.display = "block";
-                } else {
-                    product.style.display = "none";
-                }
-
-            });
-
-        });
-
-    });
-
-});
-</script>
-  
+    <script src="script.js"></script>
 </body>
 </html>
-```
