@@ -14,14 +14,13 @@
     var MAX_IMAGE_MB = 5;
     var ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-    /* ---------- Hero video: autoplay on desktop; scroll-scrubbed film on mobile ---------- */
+    /* ---------- Hero video: plays on loop; mobile uses the portrait film ---------- */
     var video = $("#heroVideo");
     if (video) {
         var mq = window.matchMedia("(max-width: 820px), (orientation: portrait)");
         var scrubMq = window.matchMedia("(max-width: 820px)");
         var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         var current = "";
-        var hTarget = 0, hShown = 0, hRaf = false;
 
         var loadHero = function () {
             var key = scrubMq.matches ? "scrub" : (mq.matches ? "mobile" : "desktop");
@@ -30,30 +29,12 @@
             var cap = key.charAt(0).toUpperCase() + key.slice(1);
             video.poster = video.dataset["poster" + cap];
             if (reduceMotion) return; // poster only
-            video.loop = key !== "scrub";
+            video.loop = true;
             video.src = video.dataset[key];
             video.load();
-            if (key === "scrub") { video.pause(); onHeroScroll(); return; }
             var p = video.play();
             if (p && p.catch) p.catch(function () { /* autoplay blocked: poster stays */ });
         };
-
-        var hTick = function () {
-            hShown += (hTarget - hShown) * 0.18;
-            if (Math.abs(hTarget - hShown) < 0.0005) hShown = hTarget;
-            if (video.duration && isFinite(video.duration)) video.currentTime = Math.min(hShown * video.duration, video.duration - 0.05);
-            if (hShown !== hTarget) requestAnimationFrame(hTick); else hRaf = false;
-        };
-        function onHeroScroll() {
-            if (current !== "scrub") return;
-            var hero = $("#home");
-            var span = hero.offsetHeight - window.innerHeight;
-            hTarget = span > 0 ? Math.min(Math.max(-hero.getBoundingClientRect().top / span, 0), 1) : 0;
-            if (!hRaf) { hRaf = true; requestAnimationFrame(hTick); }
-        }
-        window.addEventListener("scroll", onHeroScroll, { passive: true });
-        window.addEventListener("resize", onHeroScroll);
-        video.addEventListener("loadedmetadata", onHeroScroll);
 
         loadHero();
         [mq, scrubMq].forEach(function (m) {
@@ -62,7 +43,7 @@
         });
 
         document.addEventListener("visibilitychange", function () {
-            if (reduceMotion || current === "scrub") return;
+            if (reduceMotion) return;
             if (document.hidden) video.pause();
             else video.play().catch(function () {});
         });
