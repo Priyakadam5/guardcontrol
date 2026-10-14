@@ -646,12 +646,20 @@ h3 { font-size: 26px; }
     .stage-art[data-step="3"] { background-size: 265svh 160svh; background-position: 27% 37%; }
     .stage-count { left: 20px; top: calc(var(--nav-h) + 14px); bottom: auto; z-index: 2; }
 
-    .story-steps { position: relative; z-index: 2; padding: 0 20px; }
+    /* chapters stay pinned at the bottom and cross-fade in place as you scroll */
+    .story-steps { position: relative; z-index: 2; padding: 0 20px; height: 300vh; height: 300svh; }
     .step {
-        min-height: 100vh; min-height: 100svh;
+        position: sticky; top: 0;
+        height: 100vh; height: 100svh;
+        min-height: 0;
+        margin-bottom: -100vh; margin-bottom: -100svh;
         justify-content: flex-end;
         padding: 0 0 clamp(32px, 5svh, 48px);
+        opacity: 0; transform: translateY(14px);
+        pointer-events: none;
+        transition: opacity .7s ease, transform .7s ease;
     }
+    .step.is-active { pointer-events: auto; }
     .step p:not(.eyebrow) { font-size: 15px; line-height: 1.5; color: #d6dee8; }
     .step h2 { font-size: 38px; margin-bottom: 10px; }
 

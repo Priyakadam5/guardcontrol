@@ -117,8 +117,25 @@
         var so = null;
         var storyMq = window.matchMedia("(max-width: 820px)");
 
+        var setStep = function (n) {
+            steps.forEach(function (s) { s.classList.toggle("is-active", s.dataset.step === String(n)); });
+            art.dataset.step = n;
+            num.textContent = "0" + n;
+        };
+        // mobile: chapters are stacked in place, so pick the active one from scroll progress
+        var onStoryProgress = function () {
+            if (!storyMq.matches) return;
+            var sec = $("#story");
+            var span = sec.offsetHeight - window.innerHeight;
+            var p = span > 0 ? Math.min(Math.max(-sec.getBoundingClientRect().top / span, 0), 0.9999) : 0;
+            setStep(Math.floor(p * steps.length) + 1);
+        };
+        window.addEventListener("scroll", onStoryProgress, { passive: true });
+        window.addEventListener("resize", onStoryProgress);
+
         var buildStoryObserver = function () {
             if (so) so.disconnect();
+            if (storyMq.matches) { onStoryProgress(); return; }
             var margin = "-49% 0px -49% 0px";
             so = new IntersectionObserver(function (entries) {
                 entries.forEach(function (e) {
