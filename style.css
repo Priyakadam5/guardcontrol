@@ -666,8 +666,8 @@ h3 { font-size: 26px; }
     overflow: hidden;
 }
 
-/* contain keeps the whole picture; black bars inside the clip blend into the black page */
-.film-pin video { width: 100%; height: 100%; object-fit: contain; }
+/* cover: fills the screen edge to edge, no side bars */
+.film-pin video { width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 66%; will-change: transform; }
 
 .film-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.12); }
 .film-bar span { display: block; height: 100%; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; }

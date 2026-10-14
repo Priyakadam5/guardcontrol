@@ -151,6 +151,14 @@
                 fv.currentTime = Math.min(shown * fv.duration, fv.duration - 0.05);
             }
             fbar.style.transform = "scaleX(" + shown + ")";
+            // desktop: open on a close-up of the panda's face, easing out to the full shot as you scroll
+            if (!fmq.matches) {
+                var k = Math.min(shown / 0.35, 1);
+                var z = 1 + 0.4 * (1 - k * k * (3 - 2 * k));
+                fv.style.transform = "translateY(" + (-((z - 1) / 0.4) * 12).toFixed(2) + "%) scale(" + z.toFixed(4) + ")";
+            } else {
+                fv.style.transform = "";
+            }
             if (shown !== target) requestAnimationFrame(tick); else rafOn = false;
         };
 
