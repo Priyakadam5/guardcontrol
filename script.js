@@ -189,6 +189,34 @@
         onFilmScroll();
     }
 
+    /* ---------- Mobile: story background = scroll-scrubbed film ---------- */
+    var sv = $("#storyVideo");
+    if (sv && storySec && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        var smq = window.matchMedia("(max-width: 820px)");
+        var sTarget = 0, sShown = 0, sRaf = false;
+        var loadStory = function () {
+            if (smq.matches && !sv.getAttribute("src")) { sv.src = sv.dataset.src; sv.load(); }
+        };
+        var sTick = function () {
+            sShown += (sTarget - sShown) * 0.18;
+            if (Math.abs(sTarget - sShown) < 0.0005) sShown = sTarget;
+            if (sv.duration && isFinite(sv.duration)) sv.currentTime = Math.min(sShown * sv.duration, sv.duration - 0.05);
+            if (sShown !== sTarget) requestAnimationFrame(sTick); else sRaf = false;
+        };
+        var onStoryScroll = function () {
+            if (!smq.matches) return;
+            loadStory();
+            var r = storySec.getBoundingClientRect();
+            var span = storySec.offsetHeight - window.innerHeight;
+            sTarget = Math.min(Math.max(-r.top / span, 0), 1);
+            if (!sRaf) { sRaf = true; requestAnimationFrame(sTick); }
+        };
+        window.addEventListener("scroll", onStoryScroll, { passive: true });
+        window.addEventListener("resize", onStoryScroll);
+        sv.addEventListener("loadedmetadata", onStoryScroll);
+        loadStory();
+    }
+
     /* ---------- Customise modal ---------- */
     var modal = $("#customModal");
     var form = $("#customForm");
