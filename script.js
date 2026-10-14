@@ -130,7 +130,7 @@
             var p = span > 0 ? Math.min(Math.max(-sec.getBoundingClientRect().top / span, 0), 0.9999) : 0;
             // as the hero scrolls away, fade the dark scrim + copy so no black band rides up the screen
             var hb = heroSec.getBoundingClientRect().bottom;
-            heroSec.style.setProperty("--hx", Math.min(Math.max(hb / window.innerHeight, 0), 1).toFixed(3));
+            heroSec.style.setProperty("--hx", Math.min(Math.max(hb / (window.innerHeight * 0.5), 0), 1).toFixed(3));
             var idx = Math.floor(p * (steps.length + 1)); // 0 = hero intro, 1..n = chapters
             var hc = $(".hero-content");
             if (hc) hc.classList.toggle("is-away", idx > 0);
@@ -217,6 +217,25 @@
         window.addEventListener("resize", onFilmScroll);
         fv.addEventListener("loadedmetadata", onFilmScroll);
         onFilmScroll();
+    }
+
+    /* ---------- Mobile: sections pin at their bottom so the next one slides over ---------- */
+    var pinned = ["#shop", "#custom", "#about"].map(function (q) { return $(q); }).filter(Boolean);
+    if (pinned.length) {
+        var pinMq = window.matchMedia("(max-width: 820px)");
+        var pinAll = function () {
+            pinned.forEach(function (sec) {
+                sec.style.top = pinMq.matches
+                    ? Math.min(0, window.innerHeight - sec.offsetHeight) + "px" : "";
+            });
+        };
+        pinAll();
+        window.addEventListener("resize", pinAll);
+        window.addEventListener("load", pinAll);
+        if (window.ResizeObserver) {
+            var pinRo = new ResizeObserver(pinAll);
+            pinned.forEach(function (sec) { pinRo.observe(sec); });
+        }
     }
 
     /* ---------- Customise modal ---------- */
