@@ -88,6 +88,22 @@
         reveals.forEach(function (el) { el.classList.add("in"); });
     }
 
+    /* ---------- Mobile: the story lives inside the hero ---------- */
+    var storySec = $("#story");
+    var heroSec = $("#home");
+    if (storySec && heroSec) {
+        var homeMq = window.matchMedia("(max-width: 820px)");
+        var storyHome = storySec.parentNode;
+        var storyNext = storySec.nextSibling;
+        var placeStory = function () {
+            if (homeMq.matches) heroSec.appendChild(storySec);
+            else storyHome.insertBefore(storySec, storyNext);
+        };
+        placeStory();
+        if (homeMq.addEventListener) homeMq.addEventListener("change", placeStory);
+        else if (homeMq.addListener) homeMq.addListener(placeStory);
+    }
+
     /* ---------- Story: scroll-driven chapters ---------- */
     var steps = $$(".step");
     var art = $("#stageArt");
@@ -127,7 +143,8 @@
         var target = 0, shown = 0, rafOn = false;
 
         var loadFilm = function () {
-            var key = fmq.matches ? "mobile" : "desktop";
+            if (fmq.matches) return; // film is desktop-only; on mobile the story lives in the hero
+            var key = "desktop";
             if (key === fkey) return;
             fkey = key;
             fv.poster = fv.dataset[key === "mobile" ? "posterMobile" : "posterDesktop"];
