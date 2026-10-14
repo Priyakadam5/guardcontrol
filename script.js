@@ -14,19 +14,22 @@
     var MAX_IMAGE_MB = 5;
     var ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-    /* ---------- Hero video: pick the right file for the device ---------- */
+    /* ---------- Hero video: plays on loop; mobile uses the portrait film ---------- */
     var video = $("#heroVideo");
     if (video) {
         var mq = window.matchMedia("(max-width: 820px), (orientation: portrait)");
-        var current = "";
+        var scrubMq = window.matchMedia("(max-width: 820px)");
         var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var current = "";
 
         var loadHero = function () {
-            var key = mq.matches ? "mobile" : "desktop";
+            var key = scrubMq.matches ? "scrub" : (mq.matches ? "mobile" : "desktop");
             if (key === current) return;
             current = key;
-            video.poster = video.dataset[key === "mobile" ? "posterMobile" : "posterDesktop"];
+            var cap = key.charAt(0).toUpperCase() + key.slice(1);
+            video.poster = video.dataset["poster" + cap];
             if (reduceMotion) return; // poster only
+            video.loop = true;
             video.src = video.dataset[key];
             video.load();
             var p = video.play();
@@ -34,8 +37,10 @@
         };
 
         loadHero();
-        if (mq.addEventListener) mq.addEventListener("change", loadHero);
-        else if (mq.addListener) mq.addListener(loadHero);
+        [mq, scrubMq].forEach(function (m) {
+            if (m.addEventListener) m.addEventListener("change", loadHero);
+            else if (m.addListener) m.addListener(loadHero);
+        });
 
         document.addEventListener("visibilitychange", function () {
             if (reduceMotion) return;
@@ -88,6 +93,22 @@
         reveals.forEach(function (el) { el.classList.add("in"); });
     }
 
+    /* ---------- Mobile: the story lives inside the hero ---------- */
+    var storySec = $("#story");
+    var heroSec = $("#home");
+    if (storySec && heroSec) {
+        var homeMq = window.matchMedia("(max-width: 820px)");
+        var storyHome = storySec.parentNode;
+        var storyNext = storySec.nextSibling;
+        var placeStory = function () {
+            if (homeMq.matches) heroSec.appendChild(storySec);
+            else storyHome.insertBefore(storySec, storyNext);
+        };
+        placeStory();
+        if (homeMq.addEventListener) homeMq.addEventListener("change", placeStory);
+        else if (homeMq.addListener) homeMq.addListener(placeStory);
+    }
+
     /* ---------- Story: scroll-driven chapters ---------- */
     var steps = $$(".step");
     var art = $("#stageArt");
@@ -96,8 +117,33 @@
         var so = null;
         var storyMq = window.matchMedia("(max-width: 820px)");
 
+        var setStep = function (n) {
+            steps.forEach(function (s) { s.classList.toggle("is-active", s.dataset.step === String(n)); });
+            art.dataset.step = n;
+            num.textContent = "0" + n;
+        };
+        // mobile: chapters are stacked in place, so pick the active one from scroll progress
+        var onStoryProgress = function () {
+            if (!storyMq.matches) return;
+            var sec = $("#story");
+            var span = sec.offsetHeight - window.innerHeight;
+            var p = span > 0 ? Math.min(Math.max(-sec.getBoundingClientRect().top / span, 0), 0.9999) : 0;
+            // as the hero scrolls away, fade the dark scrim + copy so no black band rides up the screen
+            var hb = heroSec.getBoundingClientRect().bottom;
+            heroSec.style.setProperty("--hx", Math.min(Math.max(hb / window.innerHeight, 0), 1).toFixed(3));
+            var idx = Math.floor(p * (steps.length + 1)); // 0 = hero intro, 1..n = chapters
+            var hc = $(".hero-content");
+            if (hc) hc.classList.toggle("is-away", idx > 0);
+            setStep(idx);
+        };
+        window.addEventListener("scroll", onStoryProgress, { passive: true });
+        window.addEventListener("resize", onStoryProgress);
+
         var buildStoryObserver = function () {
             if (so) so.disconnect();
+            var hc0 = $(".hero-content");
+            if (storyMq.matches) { onStoryProgress(); return; }
+            if (hc0) hc0.classList.remove("is-away");
             var margin = "-49% 0px -49% 0px";
             so = new IntersectionObserver(function (entries) {
                 entries.forEach(function (e) {
@@ -127,7 +173,8 @@
         var target = 0, shown = 0, rafOn = false;
 
         var loadFilm = function () {
-            var key = fmq.matches ? "mobile" : "desktop";
+            if (fmq.matches) return; // film is desktop-only; on mobile the story lives in the hero
+            var key = "desktop";
             if (key === fkey) return;
             fkey = key;
             fv.poster = fv.dataset[key === "mobile" ? "posterMobile" : "posterDesktop"];
