@@ -8,8 +8,9 @@
 
     /* ---------- Config ---------- */
     var SUPPORT_EMAIL = "Supportguardcontrol@gmail.com";
-    // Static-site friendly form-to-email service (no backend of our own). Supports file attachments.
-    var FORM_ENDPOINT = "https://formsubmit.co/ajax/" + SUPPORT_EMAIL;
+    // Static-site friendly form-to-email service (no backend of our own).
+    // NOTE: the /ajax/ endpoint silently drops file attachments, so we post multipart to the regular endpoint.
+    var FORM_ENDPOINT = "https://formsubmit.co/" + SUPPORT_EMAIL;
     var MAX_IMAGE_MB = 5;
     var ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
@@ -97,8 +98,7 @@
 
         var buildStoryObserver = function () {
             if (so) so.disconnect();
-            // Stacked layout: the sticky image covers the top ~half, so watch the text area below it.
-            var margin = storyMq.matches ? "-72% 0px -27% 0px" : "-49% 0px -49% 0px";
+            var margin = "-49% 0px -49% 0px";
             so = new IntersectionObserver(function (entries) {
                 entries.forEach(function (e) {
                     if (!e.isIntersecting) return;
@@ -276,11 +276,10 @@
         submitBtn.classList.add("loading");
         submitBtn.disabled = true;
 
-        fetch(FORM_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } })
-            .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, body: j }; }); })
-            .then(function (res) {
-                var success = res.ok && (res.body.success === true || res.body.success === "true");
-                if (!success) throw new Error(res.body.message || "Submission failed");
+        // The regular endpoint answers with a redirect/HTML page we can't read cross-origin,
+        // so use no-cors: the request (with the file) is delivered, and only network failures reject.
+        fetch(FORM_ENDPOINT, { method: "POST", body: data, mode: "no-cors" })
+            .then(function () {
                 if (window.gtag) gtag("event", "custom_design_submitted");
                 form.reset();
                 resetPreview();

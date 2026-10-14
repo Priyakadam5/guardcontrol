@@ -590,23 +590,39 @@ h3 { font-size: 26px; }
     }
     .hero-buttons .button { flex: 1 1 100%; }
 
-    /* story: sticky image on top, text scrolls beneath */
-    .story-grid { grid-template-columns: 1fr; gap: 0; }
+    /* story: full-screen image pinned behind, text rolls over it */
+    .story-grid, .story-grid.container { grid-template-columns: 1fr; gap: 0; width: 100%; margin: 0; }
     .story-stage {
-        height: 46svh; height: 46vh;
-        height: 46svh;
-        z-index: 2;
-        background: linear-gradient(180deg, var(--bg) 85%, transparent);
-        padding: 10px 0 14px;
+        top: 0;
+        height: 100vh; height: 100svh;
+        margin-bottom: -100vh; margin-bottom: -100svh;
+        z-index: 1;
     }
-    .stage-frame { height: 100%; max-height: none; }
+    .story-stage::after {
+        content: "";
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(7,9,12,.55) 0%, rgba(7,9,12,0) 22%, rgba(7,9,12,0) 38%, rgba(7,9,12,.92) 78%, #07090c 100%);
+        pointer-events: none;
+    }
+    .stage-frame {
+        width: 100%; height: 100%;
+        aspect-ratio: auto;
+        border: 0; border-radius: 0; box-shadow: none;
+    }
+    /* cover-style crops sized from viewport height so the image always fills the screen */
+    .stage-art { background-size: 165.7svh 100svh; background-position: 24% 50%; }
+    .stage-art[data-step="2"] { background-size: 165.7svh 100svh; background-position: 82.5% 50%; }
+    .stage-art[data-step="3"] { background-size: 265svh 160svh; background-position: 27% 37%; }
+    .stage-count { left: 20px; top: calc(var(--nav-h) + 14px); bottom: auto; z-index: 2; }
+
+    .story-steps { position: relative; z-index: 2; padding: 0 20px; }
     .step {
-        min-height: 54vh; min-height: 54svh;
-        padding: 20px 0;
-        justify-content: center;
+        min-height: 100vh; min-height: 100svh;
+        justify-content: flex-end;
+        padding: 0 0 clamp(56px, 11svh, 110px);
     }
-    .step p:not(.eyebrow) { font-size: 16px; }
-    .step h2 { font-size: 44px; margin-bottom: 14px; }
+    .step p:not(.eyebrow) { font-size: 16px; color: #cdd6e0; }
+    .step h2 { font-size: 46px; margin-bottom: 14px; }
 
     .scroll-cue { display: none; }
 }
