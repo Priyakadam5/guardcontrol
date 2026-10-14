@@ -612,9 +612,9 @@ h3 { font-size: 26px; }
         margin-bottom: -100vh; margin-bottom: -100svh;
         transition: opacity .7s ease;
         min-height: 100vh; min-height: 100svh;
-        display: flex; flex-direction: column; justify-content: flex-end;
-        padding-top: calc(var(--nav-h) + 24px);
-        padding-bottom: 40px;
+        display: flex; flex-direction: column; justify-content: flex-start;
+        padding-top: calc(100vh - 290px); padding-top: calc(100svh - 290px); /* same top for intro + every chapter */
+        padding-bottom: 0;
     }
     /* keep our copy in the lower third, clear of the captions burned into the video (~middle of the frame) */
     .hero-title { font-size: 54px; margin-bottom: 18px; }
@@ -662,8 +662,8 @@ h3 { font-size: 26px; }
         height: 100vh; height: 100svh;
         min-height: 0;
         margin-bottom: -100vh; margin-bottom: -100svh;
-        justify-content: flex-end;
-        padding: 0 0 clamp(32px, 5svh, 48px);
+        justify-content: flex-start;
+        padding: calc(100vh - 290px) 0 0; padding: calc(100svh - 290px) 0 0;
         opacity: 0; transform: translateY(14px);
         pointer-events: none;
         transition: opacity .7s ease, transform .7s ease;
