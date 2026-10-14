@@ -128,6 +128,9 @@
             var sec = $("#story");
             var span = sec.offsetHeight - window.innerHeight;
             var p = span > 0 ? Math.min(Math.max(-sec.getBoundingClientRect().top / span, 0), 0.9999) : 0;
+            // as the hero scrolls away, fade the dark scrim + copy so no black band rides up the screen
+            var hb = heroSec.getBoundingClientRect().bottom;
+            heroSec.style.setProperty("--hx", Math.min(Math.max(hb / window.innerHeight, 0), 1).toFixed(3));
             var idx = Math.floor(p * (steps.length + 1)); // 0 = hero intro, 1..n = chapters
             var hc = $(".hero-content");
             if (hc) hc.classList.toggle("is-away", idx > 0);
