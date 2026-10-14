@@ -626,9 +626,14 @@ h3 { font-size: 26px; }
     .hero-overlay, .story-stage::after, .story-steps { opacity: var(--hx, 1); }
     .hero-content.is-away { opacity: 0; pointer-events: none; }
     .hero .story-stage { pointer-events: none; }
-    /* collection -> custom: same hard edge. The collection pins once its bottom is reached (top set by script.js), custom slides over it */
-    .shop { position: sticky; z-index: 1; }
-    .custom { position: relative; z-index: 2; box-shadow: 0 -18px 40px rgba(0,0,0,.55); }
+    /* every section after the hero: hard edge. Each one pins once its bottom is reached (top set by script.js)
+       and the next section slides up over it */
+    .shop, .custom, .about { position: sticky; }
+    .shop { z-index: 1; }
+    .custom { z-index: 2; }
+    .about { z-index: 3; background: var(--bg); }
+    .contact { position: relative; z-index: 4; }
+    .custom, .about, .contact { box-shadow: 0 -18px 40px rgba(0,0,0,.55); }
     .hero .story { background: transparent; position: relative; z-index: 3; }
     .stage-count { display: none; }
     /* the hero film is the backdrop; chapters roll over it */

@@ -219,18 +219,23 @@
         onFilmScroll();
     }
 
-    /* ---------- Mobile: collection pins at its bottom so Custom slides over it ---------- */
-    var shopSec = $("#shop");
-    if (shopSec) {
+    /* ---------- Mobile: sections pin at their bottom so the next one slides over ---------- */
+    var pinned = ["#shop", "#custom", "#about"].map(function (q) { return $(q); }).filter(Boolean);
+    if (pinned.length) {
         var pinMq = window.matchMedia("(max-width: 820px)");
-        var pinShop = function () {
-            shopSec.style.top = pinMq.matches
-                ? Math.min(0, window.innerHeight - shopSec.offsetHeight) + "px" : "";
+        var pinAll = function () {
+            pinned.forEach(function (sec) {
+                sec.style.top = pinMq.matches
+                    ? Math.min(0, window.innerHeight - sec.offsetHeight) + "px" : "";
+            });
         };
-        pinShop();
-        window.addEventListener("resize", pinShop);
-        window.addEventListener("load", pinShop);
-        if (window.ResizeObserver) new ResizeObserver(pinShop).observe(shopSec);
+        pinAll();
+        window.addEventListener("resize", pinAll);
+        window.addEventListener("load", pinAll);
+        if (window.ResizeObserver) {
+            var pinRo = new ResizeObserver(pinAll);
+            pinned.forEach(function (sec) { pinRo.observe(sec); });
+        }
     }
 
     /* ---------- Customise modal ---------- */
