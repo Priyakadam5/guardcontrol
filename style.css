@@ -621,7 +621,9 @@ h3 { font-size: 26px; }
     .hero-text { display: none; }
     .hero-buttons { flex-wrap: nowrap; gap: 10px; }
     .hero-buttons .button { flex: 1 1 0; padding-left: 10px; padding-right: 10px; font-size: 15px; }
-    .hero-overlay, .story-stage::after, .story-steps { opacity: var(--hx, 1); }
+    .hero { background: var(--bg); }
+    /* as the hero scrolls away everything fades into the page background, like the other section transitions */
+    .hero-video, .hero-overlay, .story-stage::after, .story-steps { opacity: var(--hx, 1); }
     .hero-content.is-away { opacity: 0; pointer-events: none; }
     .hero .story-stage { pointer-events: none; }
     .hero .story { background: transparent; position: relative; z-index: 3; }
