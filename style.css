@@ -212,6 +212,13 @@ h3 { font-size: 26px; }
     object-fit: cover;
 }
 
+/* never show the browser's own play button / controls on the hero video (iOS shows one when autoplay is blocked) */
+.hero-video { pointer-events: none; }
+.hero-video::-webkit-media-controls,
+.hero-video::-webkit-media-controls-start-playback-button,
+.hero-video::-webkit-media-controls-overlay-play-button,
+.hero-video::-webkit-media-controls-panel { display: none !important; -webkit-appearance: none; opacity: 0; }
+
 .hero-overlay {
     position: absolute; inset: 0;
     background:
