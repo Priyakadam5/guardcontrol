@@ -31,9 +31,10 @@
         };
         video.addEventListener("playing", function () {
             clearTimeout(fallbackTimer);
-            document.documentElement.classList.remove("no-video");
+            if (!forceStill) document.documentElement.classList.remove("no-video");
         });
-        if (reduceMotion) useStill();
+        var forceStill = /[?&]still(&|$)/.test(location.search); // preview the still-image version: add ?still to the URL
+        if (reduceMotion || forceStill) useStill();
 
         var loadHero = function () {
             var key = scrubMq.matches ? "scrub" : (mq.matches ? "mobile" : "desktop");
@@ -41,7 +42,7 @@
             current = key;
             var cap = key.charAt(0).toUpperCase() + key.slice(1);
             video.poster = video.dataset["poster" + cap];
-            if (reduceMotion) return; // poster only
+            if (reduceMotion || forceStill) return; // poster only
             video.loop = true;
             video.src = video.dataset[key];
             video.load();
@@ -58,7 +59,7 @@
         });
 
         document.addEventListener("visibilitychange", function () {
-            if (reduceMotion) return;
+            if (reduceMotion || forceStill || document.documentElement.classList.contains("no-video")) return;
             if (document.hidden) video.pause();
             else video.play().catch(function () {});
         });
