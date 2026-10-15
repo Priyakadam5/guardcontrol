@@ -46,7 +46,7 @@
             video.src = video.dataset[key];
             video.load();
             clearTimeout(fallbackTimer);
-            fallbackTimer = setTimeout(function () { if (video.paused || video.currentTime < 0.05) useStill(); }, 4000);
+            fallbackTimer = setTimeout(function () { if (video.paused) useStill(); }, 700);
             var p = video.play();
             if (p && p.catch) p.catch(useStill);
         };
