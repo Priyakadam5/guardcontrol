@@ -22,18 +22,34 @@
         var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         var current = "";
 
+        // Some phones (e.g. iPhone in Low Power Mode, data saver) refuse to autoplay video.
+        // Then we drop the video and tell the page: the story runs on still images (scroll-based) instead.
+        var fallbackTimer = null;
+        var useStill = function () {
+            document.documentElement.classList.add("no-video");
+            video.pause();
+        };
+        video.addEventListener("playing", function () {
+            clearTimeout(fallbackTimer);
+            if (!forceStill) document.documentElement.classList.remove("no-video");
+        });
+        var forceStill = /[?&]still(&|$)/.test(location.search); // preview the still-image version: add ?still to the URL
+        if (reduceMotion || forceStill) useStill();
+
         var loadHero = function () {
             var key = scrubMq.matches ? "scrub" : (mq.matches ? "mobile" : "desktop");
             if (key === current) return;
             current = key;
             var cap = key.charAt(0).toUpperCase() + key.slice(1);
             video.poster = video.dataset["poster" + cap];
-            if (reduceMotion) return; // poster only
+            if (reduceMotion || forceStill) return; // poster only
             video.loop = true;
             video.src = video.dataset[key];
             video.load();
+            clearTimeout(fallbackTimer);
+            fallbackTimer = setTimeout(function () { if (video.paused) useStill(); }, 700);
             var p = video.play();
-            if (p && p.catch) p.catch(function () { /* autoplay blocked: poster stays */ });
+            if (p && p.catch) p.catch(useStill);
         };
 
         loadHero();
@@ -43,7 +59,7 @@
         });
 
         document.addEventListener("visibilitychange", function () {
-            if (reduceMotion) return;
+            if (reduceMotion || forceStill || document.documentElement.classList.contains("no-video")) return;
             if (document.hidden) video.pause();
             else video.play().catch(function () {});
         });
