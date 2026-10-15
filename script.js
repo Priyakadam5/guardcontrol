@@ -47,9 +47,11 @@
         };
         var onHeroScroll = function () {
             if (current !== "scrub") return;
-            var hero = $("#home");
-            var span = hero.offsetHeight - window.innerHeight;
-            hTarget = span > 0 ? Math.min(Math.max(-hero.getBoundingClientRect().top / span, 0), 1) : 0;
+            // the film plays across chapters 1-3 only; the opening screen is the still image
+            var sec = $("#story");
+            var span = sec.offsetHeight - window.innerHeight;
+            var sp = span > 0 ? Math.min(Math.max(-sec.getBoundingClientRect().top / span, 0), 1) : 0;
+            hTarget = Math.min(Math.max((sp - 0.25) / 0.75, 0), 1);
             if (!hRaf) { hRaf = true; requestAnimationFrame(hTick); }
         };
         window.addEventListener("scroll", onHeroScroll, { passive: true });
@@ -176,6 +178,7 @@
             var idx = Math.floor(p * (steps.length + 1)); // 0 = hero intro, 1..n = chapters
             var hc = $(".hero-content");
             if (hc) hc.classList.toggle("is-away", idx > 0);
+            heroSec.classList.toggle("is-started", idx > 0);
             setStep(idx);
         };
         window.addEventListener("scroll", onStoryProgress, { passive: true });
