@@ -640,6 +640,9 @@ h3 { font-size: 26px; }
     /* the hero film is the backdrop; chapters roll over it */
     .stage-frame { background: transparent; }
     .stage-art { display: none; }
+    /* no autoplay (e.g. iPhone Low Power Mode): poster for the intro, then still images that change per chapter */
+    .no-video .stage-art { display: block; transition: opacity .6s ease, background-position .9s ease, background-size .9s ease; }
+    .no-video .stage-art[data-step="0"] { opacity: 0; }
 
     /* story: full-screen image pinned behind, text rolls over it */
     .story-grid, .story-grid.container { grid-template-columns: 1fr; gap: 0; width: 100%; margin: 0; }

@@ -22,6 +22,19 @@
         var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         var current = "";
 
+        // Some phones (e.g. iPhone in Low Power Mode, data saver) refuse to autoplay video.
+        // Then we drop the video and tell the page: the story runs on still images (scroll-based) instead.
+        var fallbackTimer = null;
+        var useStill = function () {
+            document.documentElement.classList.add("no-video");
+            video.pause();
+        };
+        video.addEventListener("playing", function () {
+            clearTimeout(fallbackTimer);
+            document.documentElement.classList.remove("no-video");
+        });
+        if (reduceMotion) useStill();
+
         var loadHero = function () {
             var key = scrubMq.matches ? "scrub" : (mq.matches ? "mobile" : "desktop");
             if (key === current) return;
@@ -32,8 +45,10 @@
             video.loop = true;
             video.src = video.dataset[key];
             video.load();
+            clearTimeout(fallbackTimer);
+            fallbackTimer = setTimeout(function () { if (video.paused || video.currentTime < 0.05) useStill(); }, 4000);
             var p = video.play();
-            if (p && p.catch) p.catch(function () { /* autoplay blocked: poster stays */ });
+            if (p && p.catch) p.catch(useStill);
         };
 
         loadHero();
