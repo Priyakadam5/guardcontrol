@@ -14,27 +14,49 @@
     var MAX_IMAGE_MB = 5;
     var ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-    /* ---------- Hero video: plays on loop; mobile uses the portrait film ---------- */
+    /* ---------- Hero video: autoplay loop on desktop; scroll-scrubbed film on mobile ---------- */
     var video = $("#heroVideo");
     if (video) {
         var mq = window.matchMedia("(max-width: 820px), (orientation: portrait)");
         var scrubMq = window.matchMedia("(max-width: 820px)");
         var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var forceStill = /[?&]still(&|$)/.test(location.search); // preview the still-image version: add ?still to the URL
         var current = "";
-
-        // Some phones (e.g. iPhone in Low Power Mode, data saver) refuse to autoplay video.
-        // Then we drop the video and tell the page: the story runs on still images (scroll-based) instead.
         var fallbackTimer = null;
+        var hTarget = 0, hShown = 0, hRaf = false;
+
+        // If the video can't load at all, the story runs on still images (scroll-based) instead.
         var useStill = function () {
             document.documentElement.classList.add("no-video");
             video.pause();
         };
-        video.addEventListener("playing", function () {
+        var videoReady = function () {
             clearTimeout(fallbackTimer);
             if (!forceStill) document.documentElement.classList.remove("no-video");
-        });
-        var forceStill = /[?&]still(&|$)/.test(location.search); // preview the still-image version: add ?still to the URL
+        };
+        video.addEventListener("loadeddata", videoReady);
+        video.addEventListener("error", useStill);
         if (reduceMotion || forceStill) useStill();
+
+        // mobile: playback follows the scroll position (no autoplay needed, so Low Power Mode doesn't matter)
+        var hTick = function () {
+            hShown += (hTarget - hShown) * 0.18;
+            if (Math.abs(hTarget - hShown) < 0.0005) hShown = hTarget;
+            if (video.duration && isFinite(video.duration)) video.currentTime = Math.min(hShown * video.duration, video.duration - 0.05);
+            if (hShown !== hTarget) requestAnimationFrame(hTick); else hRaf = false;
+        };
+        var onHeroScroll = function () {
+            if (current !== "scrub") return;
+            // the film plays across chapters 1-3 only; the opening screen is the still image
+            var sec = $("#story");
+            var span = sec.offsetHeight - window.innerHeight;
+            var sp = span > 0 ? Math.min(Math.max(-sec.getBoundingClientRect().top / span, 0), 1) : 0;
+            hTarget = Math.min(Math.max((sp - 0.25) / 0.75, 0), 1);
+            if (!hRaf) { hRaf = true; requestAnimationFrame(hTick); }
+        };
+        window.addEventListener("scroll", onHeroScroll, { passive: true });
+        window.addEventListener("resize", onHeroScroll);
+        video.addEventListener("loadedmetadata", onHeroScroll);
 
         var loadHero = function () {
             var key = scrubMq.matches ? "scrub" : (mq.matches ? "mobile" : "desktop");
@@ -43,13 +65,19 @@
             var cap = key.charAt(0).toUpperCase() + key.slice(1);
             video.poster = video.dataset["poster" + cap];
             if (reduceMotion || forceStill) return; // poster only
-            video.loop = true;
             video.src = video.dataset[key];
             video.load();
             clearTimeout(fallbackTimer);
-            fallbackTimer = setTimeout(function () { if (video.paused) useStill(); }, 700);
+            if (key === "scrub") {
+                video.loop = false;
+                video.pause();
+                fallbackTimer = setTimeout(function () { if (video.readyState < 2) useStill(); }, 3500);
+                onHeroScroll();
+                return;
+            }
+            video.loop = true;
             var p = video.play();
-            if (p && p.catch) p.catch(useStill);
+            if (p && p.catch) p.catch(function () { /* autoplay blocked: poster stays */ });
         };
 
         loadHero();
@@ -59,7 +87,7 @@
         });
 
         document.addEventListener("visibilitychange", function () {
-            if (reduceMotion || forceStill || document.documentElement.classList.contains("no-video")) return;
+            if (reduceMotion || forceStill || current === "scrub") return;
             if (document.hidden) video.pause();
             else video.play().catch(function () {});
         });
@@ -150,6 +178,7 @@
             var idx = Math.floor(p * (steps.length + 1)); // 0 = hero intro, 1..n = chapters
             var hc = $(".hero-content");
             if (hc) hc.classList.toggle("is-away", idx > 0);
+            heroSec.classList.toggle("is-started", idx > 0);
             setStep(idx);
         };
         window.addEventListener("scroll", onStoryProgress, { passive: true });
